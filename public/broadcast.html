@@ -3,6 +3,8 @@
   <head>
     <title>Broadcaster</title>
     <meta charset="UTF-8" />
+    <link href="/styles.css" rel="stylesheet" />
+
   </head>
   <body>
     <section class="select">
@@ -14,8 +16,11 @@
       <label for="videoSource">Video source: </label>
       <select id="videoSource"></select>
     </section>
+    <button onclick="videoType('camera');">Camera</button>
+    <button onclick="videoType('screen');">Screen</button>
 
-    <video playsinline autoplay muted></video>
+    <video autoplay muted controls></video>
+        <p>Developed By Azizul Hasan Raihan</p>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/broadcast.js"></script>
   </body>

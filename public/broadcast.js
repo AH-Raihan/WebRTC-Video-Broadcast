@@ -12,6 +12,10 @@ const config = {
   ]
 };
 
+let videoOf='camera';
+if(localStorage.getItem('videoOf')){
+  videoOf=localStorage.getItem('videoOf');
+}
 const socket = io.connect(window.location.origin);
 
 socket.on("answer", (id, description) => {
@@ -82,7 +86,10 @@ function gotDevices(deviceInfos) {
     }
   }
 }
-
+function videoType(type){
+  localStorage.setItem('videoOf',type);
+  window.location.reload();
+}
 function getStream() {
   if (window.stream) {
     window.stream.getTracks().forEach(track => {
@@ -95,10 +102,17 @@ function getStream() {
     audio: { deviceId: audioSource ? { exact: audioSource } : undefined },
     video: { deviceId: videoSource ? { exact: videoSource } : undefined }
   };
-  return navigator.mediaDevices
+  if(videoOf==='screen'){
+    return navigator.mediaDevices
+    .getDisplayMedia(constraints)
+    .then(gotStream)
+    .catch(handleError);
+  }else{
+    return navigator.mediaDevices
     .getUserMedia(constraints)
     .then(gotStream)
     .catch(handleError);
+  }
 }
 
 function gotStream(stream) {
